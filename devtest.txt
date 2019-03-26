@@ -1,0 +1,6 @@
+"devtest"
+{
+    "base"          "base"
+    "title"         "devtest"
+    "menusystem"    "1"
+}
