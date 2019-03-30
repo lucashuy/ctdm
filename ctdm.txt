@@ -1,4 +1,4 @@
-"devtest"
+"ctdm"
 {
     "base"          "base"
     "title"         "devtest"
