@@ -49,8 +49,10 @@ hook.Add("Tick", "CTDM.roundManager", function()
 end)
 
 function GM:Initialize()
+    local build = file.Read("garrysmod/gamemodes/ctdm/gamemode/BUILD", "GAME")
+
     SetGlobalInt("CTDM.roundState", CTDM.ROUND_STATE_WAITING)
-    SetGlobalString("CTDM.version", "[CTDM][0.0.1]")
+    SetGlobalString("CTDM.version", "[CTDM][0.0." .. build .. "]")
 end
 
 function GM:SetupRound()
