@@ -1,0 +1,26 @@
+{
+    "levels": [
+        {
+            "requiredExp": 0,
+            "unlockWeapons": [
+                "weapon1",
+                "weapon1",
+                "weapon1",
+                "weapon1",
+                "weapon1"
+            ],
+            "unlockPerks": []
+        },
+        {
+            "requiredExp": 0,
+            "unlockWeapons": [
+                "weapon1",
+                "weapon1",
+                "weapon1",
+                "weapon1",
+                "weapon1"
+            ],
+            "unlockPerks": []
+        }
+    ]
+}

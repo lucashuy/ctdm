@@ -2,6 +2,7 @@ util.AddNetworkString("CTDM.hitmarker")
 util.AddNetworkString("CTDM.clientScore")
 util.AddNetworkString("CTDM.requestPresets")
 util.AddNetworkString("CTDM.sendPresets")
+util.AddNetworkString("CTDM.openGunMenu")
 
 for _, f in pairs(file.Find(GM.FolderName .. "/gamemode/server/*.lua", "LUA")) do
     include("server/" .. f)
