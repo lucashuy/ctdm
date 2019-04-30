@@ -1,6 +1,7 @@
 CTDM = CTDM or {}
 CTDM.map = CTDM.map or {}
 
+-- the speed at which one player caps a point
 local CAP_POINTS = 10
 
 local update = 0

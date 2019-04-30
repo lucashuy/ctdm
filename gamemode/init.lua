@@ -25,10 +25,3 @@ end
 
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
-
-hook.Add("PlayerHurt", "CTDM.hitmarker", function(ply, att)
-    if IsValid(ply) and IsValid(att) and ply:Team() ~= att:Team() then
-        net.Start("CTDM.hitmarker")
-        net.Send(att)
-    end
-end)

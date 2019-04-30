@@ -1,26 +1,34 @@
 CTDM = CTDM or {}
 
+-- called once when the player connects for the first time
 function GM:PlayerInitialSpawn(ply)
+    -- makes a call to a database function
+    ply:DBNewPlayerSetup()
+
     local roundState = GetGlobalInt("CTDM.roundState", CTDM.ROUND_STATE_WAITING)
 
+    -- they are a spectator if they are the first person in the match
     if not roundState == CTDM.ROUND_STATE_ALIVE then
         ply:SetTeam(CTDM.TEAM_SPEC)
 
+        -- if someone joins, setup the round for them
+        -- this is here because i dont want rounds to run on an empty server
         if #player.GetAll() > 0 then
             self:SetupRound()
         end
     elseif roundState == CTDM.ROUND_STATE_ALIVE then
+        -- TODO: autobalance teams/choose team here
         ply:SetTeam(CTDM.TEAM_BLUE)
     end
 end
 
 function GM:PlayerSpawn(ply)
-    ply:DBNewPlayerSetup()
-
+    -- if the spawned and they are not a spectator, apply model/weapons
     if IsValid(ply) and not ply:IsSpectator() then
         self:PlayerSetModel(ply)
         self:PlayerLoadout(ply)
 
+        -- wait for the client to sync with the server before asking them for their saved presets
         timer.Create(ply:Name() .. ".waitToRequestPresets", 0.1, 1, function()
             net.Start("CTDM.requestPresets")
             net.Send(ply)
@@ -46,10 +54,13 @@ function GM:PlayerLoadout(ply)
 end
 
 function GM:GetFallDamage(ply, speed)
+    -- this is CS:S fall damage i think
 	return math.max(0, math.ceil(0.2418 * speed - 141.75))
 end
 
 function GM:PlayerShouldTakeDamage(ply, att)
+    -- TODO: fix me please
+    -- something is wrong i think
     if (IsValid(ply) and IsValid(att) and ply:Team() ~= att:Team()) then
         return true
     end
@@ -57,7 +68,19 @@ function GM:PlayerShouldTakeDamage(ply, att)
     return false
 end
 
+-- hitmarker code
+hook.Add("PlayerHurt", "CTDM.hitmarker", function(ply, att)
+    if IsValid(ply) and IsValid(att) and ply:Team() ~= att:Team() then
+        net.Start("CTDM.hitmarker")
+        net.Send(att)
+    end
+end)
+
+-- return function for the saved weapon presets
 net.Receive("CTDM.sendPresets", function(length, ply)
+    -- most of this code is from the authors of CW2.0
+    -- it appears that their preset retrieval code is called internally, so i just copied it here
+
     local weapon = net.ReadString()
     local data = net.ReadString()
     data = util.JSONToTable(data)
