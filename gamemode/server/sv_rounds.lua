@@ -52,7 +52,7 @@ function GM:Initialize()
     local build = file.Read("gamemodes/ctdm/BUILD", "GAME")
 
     SetGlobalInt("CTDM.roundState", CTDM.ROUND_STATE_WAITING)
-    SetGlobalString("CTDM.version", "[CTDM][0.0." .. build .. "]")
+    SetGlobalString("CTDM.version", "[CTDM][0.1." .. build .. "]")
 end
 
 function GM:SetupRound()
