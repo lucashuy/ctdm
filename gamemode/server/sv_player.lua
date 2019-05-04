@@ -5,6 +5,21 @@ function GM:PlayerInitialSpawn(ply)
     -- makes a call to a database function
     ply:DBNewPlayerSetup()
 
+    -- get player exp to compare against CTDM.levels table so assign player networked data
+    local plyEXP = ply:DBGetEXP()
+    local totalEXP = 0
+    for k, v in pairs(CTDM.levels["levels"]) do
+        totalEXP = totalEXP + v["requiredExp"]
+
+        if (plyEXP < totalEXP) then
+            ply:SetNWInt("CTDM.rank", k)
+            ply:SetNWInt("CTDM.exp", plyEXP)
+            ply:SetNWInt("CTDM.expLeft", totalEXP - plyEXP)
+
+            break
+        end
+    end
+
     local roundState = GetGlobalInt("CTDM.roundState", CTDM.ROUND_STATE_WAITING)
 
     -- they are a spectator if they are the first person in the match

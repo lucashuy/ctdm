@@ -32,3 +32,17 @@ function plyMeta:DBAddEXP(exp)
     sql.Query("UPDATE `CTDM.levels` SET `exp` = " .. (expToAdd) .. " WHERE `steamid` = " .. self:SteamID64())
 
 end
+
+function plyMeta:DBGetEXP()
+    local data = sql.Query("SELECT `exp` FROM `CTDM.levels` WHERE `steamid` = " .. self:SteamID64())
+
+    -- this will always return something
+    return data
+end
+
+function plyMeta:DBGetLevel()
+    local data = sql.Query("SELECT `rank` from `CTDM.levels` WHERE `steamid` = " .. self:SteamID64())
+
+    -- this will always return something
+    return data
+end
